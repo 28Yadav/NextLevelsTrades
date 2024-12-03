@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redeem Points</title>
+</head>
+<body>
+    <h1>Redeem Your Points</h1>
+    <p>You have <strong>{{ points }}</strong> points available for redemption.</p>
+    <h2>Available Subscriptions for Redemption</h2>
+    <form action="{{ url_for('redeem') }}" method="POST">
+        {% for subscription, cost in redemption_costs.items() %}
+            <div>
+                <button type="submit" name="subscription" value="{{ subscription }}" 
+                        {% if points < cost %} disabled {% endif %}>
+                    Redeem {{ cost }} Points for {{ subscription.replace('_', ' ').title() }}
+                </button>
+                {% if points < cost %}
+                    <span style="color: red;">(Not enough points)</span>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </form>
+</body>
+</html>

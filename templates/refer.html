@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refer and Earn</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Global styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            color: #333333;
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin: 20px 0;
+            color: #000000;
+        }
+
+        p {
+            text-align: center;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        /* Container styling */
+        .container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Button styling */
+        button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 12px 20px;
+            background-color: black;
+            color: #ffffff;
+            border: 1px solid #444444;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #555555;
+            border-color: #666666;
+        }
+
+        button:active {
+            background-color: #666666;
+            border-color: #888888;
+        }
+
+        /* Divider styling */
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 20px 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            h1, h2 {
+                font-size: 1.5rem;
+            }
+
+            .container {
+                padding: 15px;
+            }
+
+            button {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">
+                <a href="/"><img src="{{ url_for('static', filename='download.png') }}" alt="Logo"></a>
+            </div>
+            <!-- Checkbox for Hamburger Menu -->
+            <input type="checkbox" id="menu-toggle" />
+            <!-- Hamburger Menu Icon (Font Awesome) -->
+            <label class="menu-icon" for="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </label>
+    
+            <div class="navbar-menu">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="#About">About</a>
+                <a href="{{ url_for('policy') }}">Policy</a>
+                <a href="">Indicators</a>
+            
+                {% if current_user.is_authenticated %}
+                    {% if current_user.subscription_active %}
+                        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('register') }}">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    
+        <div class="navbar-right">
+            <button id="right-button">Contact</button>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+            {% else %}
+                <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+            {% endif %}
+        </div>
+    </nav>
+    <h1>Refer and Earn</h1>
+    <div class="container">
+        <p>Your referral code: <strong>{{ referral_code }}</strong></p>
+        <p>You currently have <strong>{{ points }}</strong> points.</p>
+        <p>Share your referral code with friends. For every friend who subscribes, you earn 10 points!</p>
+
+        <hr />
+
+        <h2>Redeem Points</h2>
+        <form action="{{ url_for('redeem') }}" method="POST">
+            {% for subscription, cost in redemption_costs.items() %}
+                <div>
+                    <button type="submit" name="subscription" value="{{ subscription }}">
+                        Redeem {{ cost }} Points for {{ subscription.replace('_', ' ').title() }}
+                    </button>
+                </div>
+            {% endfor %}
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,40 @@
+{% if config %}
+            <h1>Welcome back, {{ current_user.username }}</h1>
+            <div>
+                <h2>Portfolio</h2>
+                <p>Asset: {{ config.asset_name }}</p>
+                <p>Trade Size: {{ config.trade_size_usdt }} USDT</p>
+                <p>Indicator: {{ config.indicator }}</p>
+                <p>Exchange: {{ config.exchange }}</p>
+            </div>
+            <div class="form-container">
+                <!-- Conditionally render Start/Stop Bot button -->
+                {% if user_bot_status == 'running' %}
+                    <form method="POST" action="{{ url_for('stop_bot') }}">
+                        <button type="submit" class="btn btn-danger">Stop Bot</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{{ url_for('start_bot') }}">
+                        <button type="submit" class="btn btn-success">Start Bot</button>
+                    </form>
+                {% endif %}
+                <p>Current bot status: {{ user_bot_status }}</p>
+                <form method="GET" action="{{ url_for('edit_config') }}">
+                    <button type="submit">Edit Configuration</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="form-container">
+                <h1>Configure Trading Bot</h1>
+                <form method="POST" action="{{ url_for('dashboard') }}">
+                    {{ form.hidden_tag() }}
+                    <div>{{ form.api_key.label }} {{ form.api_key() }}</div>
+                    <div>{{ form.secret.label }} {{ form.secret() }}</div>
+                    <div>{{ form.asset_name.label }} {{ form.asset_name() }}</div>
+                    <div>{{ form.trade_size_usdt.label }} {{ form.trade_size_usdt() }}</div>
+                    <div>{{ form.indicator.label }} {{ form.indicator() }}</div>
+                    <div>{{ form.exchange.label }} {{ form.exchange() }}</div>
+                    <div><button type="submit">Save Configuration</button></div>
+                </form>
+            </div>
+        {% endif %}

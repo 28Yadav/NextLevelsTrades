@@ -1,0 +1,80 @@
+<!-- project_root/templates/verify_otp.html -->
+{% extends "base.html" %}
+
+{% block title %}Verify OTP{% endblock title %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #6e00ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+    }
+    .form-container {
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        width: 400px;
+        text-align: center;
+    }
+    .form-container h2 {
+        color: #333;
+        margin-bottom: 20px;
+        display: block;
+    }
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #333;
+    }
+    .form-group .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+    .btn {
+        background-color: #ff00bf;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        width: 100%;
+    }
+    .btn-primary {
+        background-color: #ff00bf;
+    }
+</style>
+
+<div class="form-container">
+    <h2>Verify OTP</h2>
+    <form method="POST" action="{{ url_for('verify_otp') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.otp.label }}
+            {{ form.otp(class="form-control") }}
+        </div>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+    <form method="POST" action="{{ url_for('resend_otp') }}">
+        <div class="form-group">
+            <button type="submit" class="btn btn-secondary">Resend OTP</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting to PayU</title>
+    <style>
+        /* General body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            text-align: center;
+            align-items: center;
+            padding: 0;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .referr{
+            margin-top: 250px;
+        }
+
+        /* Form container styling */
+        form{
+            margin-left: 37%;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            display: block; /* Explicitly make h2 block-level */
+            width: 100%; /* Ensure it spans the full width */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: black;
+            color: #fff;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        button:active {
+            background-color: #003d80;
+        }
+    </style>
+</head>
+<body>
+    <div class="referr">
+        <h2>Please add a referral code if you have</h2>
+    
+    <form name="payuForm" method="POST" action="{{ payu_url }}">
+        <input type="hidden" name="key" value="{{ data.key }}" />
+        <input type="hidden" name="txnid" value="{{ data.txnid }}" />
+        <input type="hidden" name="amount" value="{{ data.amount }}" />
+        <input type="hidden" name="productinfo" value="{{ data.productinfo }}" />
+        <input type="hidden" name="firstname" value="{{ data.firstname }}" />
+        <input type="hidden" name="email" value="{{ data.email }}" />
+        <input type="hidden" name="phone" value="{{ data.phone }}" />
+
+        <!-- Add referral code dynamically to success URL -->
+        <input type="hidden" name="surl" id="surl" value="{{ data.surl }}" />
+        <input type="hidden" name="furl" value="{{ data.furl }}" />
+        <input type="hidden" name="hash" value="{{ data.hash }}" />
+
+        <!-- Referral Code Input -->
+        <label for="referral_code">Referral Code (optional):</label>
+        <input type="text" id="referral_code" name="referral_code" />
+
+        <!-- Submit Button -->
+        <button type="submit" onclick="updateSuccessURL()">Proceed to Pay</button>
+    </form>
+</div>
+
+    <script>
+        function updateSuccessURL() {
+            const referralCode = document.getElementById('referral_code').value.trim();
+            const surlInput = document.getElementById('surl');
+            let surl = new URL(surlInput.value); // Use URL object for manipulation
+    
+            // Remove any existing referral_code parameter
+            surl.searchParams.delete('referral_code');
+    
+            // Add the referral code if provided
+            if (referralCode) {
+                surl.searchParams.append('referral_code', referralCode);
+            }
+    
+            // Update the hidden input's value
+            surlInput.value = surl.toString();
+        }
+    </script>
+    
+</body>
+</html>

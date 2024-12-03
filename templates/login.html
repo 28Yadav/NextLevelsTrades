@@ -1,0 +1,280 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock title %}
+
+{% block content %}
+<style>
+    /* Base Styles */
+    body {
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .form-container {
+        margin-top: 80px;
+        background-color: #fff;
+        border-radius: 10px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    .form-container h2 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .form-group .form-control {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 14px;
+    }
+
+    .form-error {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+        padding: 8px;
+        border-radius: 5px;
+        margin-top: 5px;
+        font-size: 13px;
+        width: 100%;
+    }
+
+    .btn {
+        background-color: black;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .btn-primary {
+        background: linear-gradient(to right, #8C53FE 50%, black 50%);
+        background-size: 200% 100%;
+        background-position: right bottom;
+        transition: all 0.4s ease-out;
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .btn-primary:hover {
+        background-position: left bottom;
+    }
+
+    .btn-danger {
+        background-color: whitesmoke;
+        border: 2px solid rgba(0, 0, 0, 0.726);
+        color: black;
+        border-radius: 20px;
+    }
+
+    .google-login img {
+        vertical-align: middle;
+    }
+
+    .google-login a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: black;
+        padding: 10px;
+        border-radius: 5px;
+        margin-top: 20px;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    hr {
+        border: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    p a {
+        color: #6e00ff;
+        text-decoration: none;
+    }
+
+    .alert-container {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 10px;
+        border: 1px solid transparent;
+        border-radius: 5px;
+    }
+
+    .alert-danger {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+
+    .alert-info {
+        color: #0c5460;
+        background-color: #d1ecf1;
+        border-color: #bee5eb;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 600px) {
+        /* Hide navbar on smaller screens */
+        .navbar {
+            display: none;
+        }
+
+        body {
+            padding: 20px;
+            align-items: flex-start;
+        }
+
+        .form-container {
+            margin-top: 20px;
+            padding: 15px;
+            max-width: 90%;
+            box-shadow: none;
+        }
+
+        .form-container h2 {
+            font-size: 20px;
+        }
+
+        .form-group .form-control,
+        .btn {
+            font-size: 12px;
+        }
+
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+    }
+</style>
+
+<!-- Navbar section will be hidden on screens below 600px -->
+<nav class="navbar">
+    <div class="navbar-left">
+        <div class="navbar-logo">
+            <a href="/"><img src="{{ url_for('static', filename='download.png') }}" alt="Logo"></a>
+        </div>
+        <div class="navbar-menu">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="#About">About</a>
+            <a href="#contact">Career</a>
+            <a href="{{ url_for('policy') }}">Policy</a>
+            <a href="">Indicators</a>
+        
+            {% if current_user.is_authenticated %}
+                {% if current_user.subscription_active %}
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('register') }}">Get Started</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="navbar-right">
+        <button id="right-button">Contact</button>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+        {% else %}
+            <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+        {% endif %}
+    </div>
+</nav>
+
+<div class="form-container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="alert-container">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <h2>Login</h2>
+    <form method="POST" action="{{ url_for('login') }}">
+        {{ form.hidden_tag() }}
+
+        <!-- Email Field -->
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email(class="form-control") }}
+            {% if form.email.errors %}
+                <div class="form-error">
+                    {% for error in form.email.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password(class="form-control") }}
+            {% if form.password.errors %}
+                <div class="form-error">
+                    {% for error in form.password.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            {{ form.submit(class="btn btn-primary") }}
+        </div>
+    </form>
+
+    <hr>
+    <p><a href="{{ url_for('reset_request') }}">Forgot Password?</a></p>
+
+    <h3>or</h3>
+    <div class="google-login">
+        <a href="{{ url_for('google_login') }}" class="btn btn-danger">
+            <img src="{{ url_for('static', filename='google-logo.png') }}" alt="Google Logo" style="height: 20px; width: 20px; margin-right: 20px;">
+            Continue with Google
+        </a>
+    </div>
+</div>
+{% endblock content %}

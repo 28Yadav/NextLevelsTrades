@@ -1,0 +1,809 @@
+body {
+    background: white;
+    background-size: 200% 200%;
+    height: 125vh;
+    margin: 0;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.first-page {
+    background: white;
+    width: 100%;
+    padding-top: 60px;
+    display: flex;
+    margin: 0;
+}
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px 30px;
+    z-index: 1000;
+    height: 55px;
+    background-color: white;
+    color: black;
+}
+
+.custom-hr {
+    border: 0;
+    height: 1px;
+    background-color: black;
+    margin: 66px 0 1px 0;
+    width: 100%;
+    z-index: 1;
+    position: relative;
+}
+
+.navbar-left {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo {
+    font-size: 30px;
+    font-weight: bold;
+    margin-right: 100px;
+    color: black;
+}
+
+.navbar-logo img {
+    height: 55px;
+    width: auto;
+}
+
+.navbar-menu {
+    display: flex;
+    gap: 45px;
+    align-items: center;
+}
+
+.navbar-menu a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-style: inherit;
+    transition: color 0.3s ease;
+    padding-top: 5px;
+}
+
+.navbar-menu a:hover {
+    text-decoration: underline;
+    background-color: #8A52FE;
+}
+
+.navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 30px;
+}
+
+#right-button {
+    background-color: transparent;
+    border: none;
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    font-style: inherit;
+    transition: color 0.3s ease;
+    padding-top: 5px;
+}
+
+.navbar-signup {
+    padding: 8px 20px;
+    font-size: 15px;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: black;
+    color: white;
+    border: none;
+    height: 68px;
+    width: 120px;
+    position: relative;
+    overflow: hidden;
+}
+
+.navbar-signup span {
+    position: relative;
+    z-index: 2;
+}
+
+.navbar-signup::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 100%;
+    width: 100%;
+    height: 100%;
+    background-color: #8B52FE;
+    transition: right 0.4s ease;
+    z-index: 1;
+}
+
+.navbar-signup:hover::before {
+    right: 0;
+}
+
+.navbar-signup:hover span {
+    color: white;
+}
+
+.welcome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: calc(100vh - 55px);
+    padding: 0 30px;
+}
+
+.welcome-left {
+    margin-left: 200px;
+    max-width: 50%;
+    margin-left: 90px;
+    margin-top: 0px;
+}
+
+.welcome-left h1 {
+    margin: 0;
+    font-family: "Play", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 78px;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.welcome p {
+    font-family: "Roboto", sans-serif;
+    font-weight: 370;
+    font-style: normal;
+    font-size: 25px;
+    gap: 5px;
+    margin-top: 20px;
+    display: inline-block;
+    white-space: nowrap;
+    margin-bottom: 40px;
+    color: black;
+}
+
+.wwelcome-button {
+    font-family: "Roboto", sans-serif;
+    font-weight: 370;
+    font-style: normal;
+    font-size: 18px;
+    background-color: black;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: white;
+    height: 60px;
+    width: 230px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.wwelcome-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: #8851FE;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.wwelcome-button:hover::before {
+    left: 0;
+}
+
+.wwelcome-button:hover {
+    color: white;
+}
+
+.welcome-right img {
+    height: 600px;
+    width: 590px;
+    align-items: right;
+    margin-right: 30px;
+}
+
+.gradient-text {
+    background: linear-gradient(45deg, #ff009d, #00dbde);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-button {
+    font-family: "Roboto", sans-serif;
+    font-weight: 370;
+    font-style: normal;
+    font-size: 18px;
+    background-color: transparent;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: black;
+    height: 60px;
+    width: 165px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.login-button::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    transition: left 0.3s ease;
+    z-index: -1;
+}
+
+.login-button:hover::before {
+    left: 0;
+}
+
+.login-button:hover {
+    color: white;
+}
+
+.Second-page {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    background-color: #F4F0FF;
+    height: 30vh;
+}
+
+#second-h1 {
+    margin-top: 10px;
+    font-family: "Markazi Text", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    gap: 3px;
+    font-size: 40px;
+    margin-left: 27%;
+}
+
+.non-marquee {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 20px;
+    margin-left: 20%;
+}
+
+.non-marquee span {
+    margin-right: 40px;
+}
+
+#Viewplans {
+    margin-top: 20px;
+    border: 2px solid transparent;
+    width: 135px;
+    height: 45px;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    background: none;
+    color: black;
+    background-size: 200% 200%;
+    transition: background-position 0.5s, color 0.5s;
+    border-radius: 40px;
+    background: linear-gradient(transparent, #0000001e) padding-box, linear-gradient(45deg, #999, #ccc) border-box;
+}
+
+.click-section {
+    font-family: "Agdasima", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    text-align: center;
+    padding: 40px 0;
+}
+
+.click-section h1 {
+    font-size: 2.5rem;
+    font-weight: normal;
+    margin-bottom: 40px;
+}
+
+.steps-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.step-box {
+    background-color: #f8f8f8;
+    padding: 60px;
+    border-radius: 10px;
+    width: 250px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 350px;
+}
+
+.click-image {
+    height: 70px;
+    width: 100px;
+}
+
+.step-box h2 {
+    font-size: 3rem;
+    color: #6d28d9;
+    margin-bottom: 10px;
+    margin-top: -50px;
+}
+
+.step-box p {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.step-box img {
+    width: auto;
+    height: 250px;
+    margin-bottom: 20px;
+    margin-left: -25px;
+}
+
+.extra-section {
+    text-align: center;
+    padding: 40px 0;
+}
+
+.extra-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.extra-box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 280px;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.extra-section h1 {
+    font-family: "Agdasima", sans-serif;
+    font-size: 38px;
+}
+
+.extra-box img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 20px;
+}
+
+.extra-box h3 {
+    font-size: 1.2rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.extra-box p {
+    font-size: 0.95rem;
+    color: #555;
+    margin-bottom: 0;
+}
+
+.get-in-touch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+}
+
+.contact-box {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 400px;
+}
+
+.contact-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.contact-box label {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.contact-box input,
+.contact-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.contact-box textarea {
+    height: 120px;
+    resize: none;
+}
+
+.contact-box button {
+    width: 100%;
+    padding: 12px;
+    background-color: black;
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#contact-button:hover {
+    background-color: #8A52FE;
+}
+
+.footer {
+    background-color: #111;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-column {
+    flex: 1 1 200px;
+    margin: 20px 10px;
+}
+
+.footer-column h3 {
+    margin-bottom: 15px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.footer-column a {
+    display: block;
+    color: #aaa;
+    text-decoration: none;
+    margin-bottom: 8px;
+    font-size: 13px;
+    transition: color 0.2s;
+}
+
+.footer-column a:hover {
+    color: #fff;
+}
+
+.footer-logo {
+    margin-left: 0;
+    align-items: left;
+    align-self: left;
+    align-content: left;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.footer-logo span {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #666;
+}
+
+.footer-social {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.footer-social a {
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    background-color: #333;
+    border-radius: 50%;
+    line-height: 35px;
+    text-align: center;
+    font-size: 16px;
+    color: #fff;
+    transition: background-color 0.2s;
+}
+
+.footer-social a:hover {
+    background-color: #555;
+}
+
+.footer-copyright {
+    margin-top: 20px;
+    font-size: 12px;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-column {
+        flex: 1 1 100%;
+        text-align: center;
+    }
+}
+
+/* Responsive Styles */
+
+/* For screens smaller than 992px (Tablets and smaller devices) */
+@media (max-width: 992px) {
+    /* Hide the welcome image on smaller screens */
+    .welcome-right {
+        display: none;
+    }
+
+    /* Hide the custom HR on smaller screens */
+    .custom-hr {
+        display: none;
+    }
+
+    /* Navbar adjustments */
+    .navbar {
+        position: relative;
+        padding: 10px 15px;
+        background-color: #f5f5f5;
+    }
+
+    /* Hide the checkbox */
+    #menu-toggle {
+        display: none;
+    }
+
+    /* Hamburger menu icon */
+    .menu-icon {
+        display: block;
+        font-size: 28px;
+        color: black;
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        cursor: pointer;
+    }
+
+    /* Navbar Menu (hidden by default, shown when hamburger is clicked) */
+    .navbar-menu {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background-color: whitesmoke;
+        position: absolute;
+        top: 55px;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        padding: 10px 0;
+    }
+
+    /* Show the menu when the checkbox is checked */
+    #menu-toggle:checked + label + .navbar-menu {
+        display: flex;
+    }
+
+    /* Add signup button for smaller screens */
+    .navbar-menu .signup-button {
+        display: block;
+        text-align: center;
+        margin: 15px 0;
+        padding: 10px 20px;
+        background-color: #000;
+        color: #fff;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    /* Close the menu when a link is clicked */
+    .navbar-menu a {
+        text-decoration: none;
+        color: black;
+        font-size: 18px;
+        transition: color 0.3s ease;
+    }
+
+    .navbar-menu a:hover {
+        text-decoration: underline;
+        background-color: #8A52FE;
+    }
+
+    /* Hide the right section (Sign up, Contact) on smaller screens */
+    .navbar-right {
+        display: none;
+    }
+
+    /* Center welcome text, reduce page height, and align text left */
+    .welcome {
+        flex-direction: column;
+        text-align: left;
+        justify-content: flex-start;
+        height: 70vh;
+        padding: 40px 15px 0;
+    }
+
+    /* Adjustments for welcome section text */
+    .welcome-left {
+        margin: 0;
+        max-width: 100%;
+    }
+
+    /* Increase font size, add break after "door", and prevent wrapping after */
+    .welcome-left h1 {
+        font-size: 48px;
+        line-height: 1.2;
+        margin: 0;
+        white-space: normal;
+    }
+    /* Increase font size of paragraph text */
+    .welcome-left p {
+        font-size: 22px;
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+    /* Adjust button sizes, center them, and add line breaks */
+    .wwelcome-button,
+    .login-button {
+        width: 80%;
+        max-width: 200px;
+        height: 45px;
+        margin: 10px auto;
+    }
+    /* Arrange buttons in a column with spacing */
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    /* Second page marquee effect for smaller screens */
+    .non-marquee {
+        animation: marquee 15s linear infinite;
+        white-space: nowrap;
+        overflow: hidden;
+        width: 100%;
+        text-align: center;
+    }
+    .non-marquee span {
+        display: inline-block;
+        padding-right: 50px;
+    }
+    @keyframes marquee {
+        0% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: translateX(-100%);
+        }
+    }
+    /* Step container adjustments */
+    .steps-container,
+    .extra-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    .step-box,
+    .extra-box {
+        width: 100%;
+        max-width: 280px;
+        margin: 0 auto;
+    }
+    /* Footer column adjustments */
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-column {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+}
+
+/* For screens smaller than 600px (Mobile devices) */
+@media (max-width: 600px) {
+    /* Reduce logo size */
+    .navbar-logo img {
+        height: 35px;
+    }
+
+    /* Further reduce welcome section height and adjust text */
+    .welcome {
+        height: 55vh;
+        padding-top: 30px;
+    }
+
+    /* Further adjust h1 font size with line break after "door" */
+    .welcome-left h1 {
+        font-size: 40px;
+        line-height: 1.2;
+        margin: 0;
+        white-space: normal;
+    }
+
+    /* Increase paragraph font size */
+    .welcome-left p {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    /* Button adjustments */
+    .wwelcome-button,
+    .login-button {
+        width: 90%;
+        height: 40px;
+    }
+
+    /* Prevent horizontal overflow */
+    body,
+    html {
+        width: 100%;
+        overflow-x: hidden;
+    }
+}
+
+/* For screens larger than 992px */
+@media (min-width: 993px) {
+    /* Hide the hamburger icon and checkbox on larger screens */
+    .menu-icon {
+        display: none;
+    }
+
+    #menu-toggle {
+        display: none;
+    }
+
+    /* Display navbar menu in a row */
+    .navbar-menu {
+        display: flex;
+        position: static;
+        flex-direction: row;
+    }
+
+    /* Navbar-right should display */
+    .navbar-right {
+        display: flex;
+    }
+}

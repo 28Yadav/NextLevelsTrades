@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - NextLevelTrades</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='download.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Base Styles */
+        body {
+            background: whitesmoke;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            margin: 100px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            overflow: auto;
+        }
+
+        .container {
+            margin-top: 200px;
+            width: 90%;
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            color: #333;
+            text-align: center;
+        }
+
+        .form-container {
+            width: 100%;
+        }
+
+        .form-container h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .form-container input,
+        .form-container select,
+        .form-container textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid black;
+            border-radius: 5px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-container textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        .form-container button {
+            font-family: "Roboto", sans-serif;
+            font-weight: 270;
+            font-size: 15px;
+            background-color: black;
+            text-transform: uppercase;
+            cursor: pointer;
+            color: white;
+            height: 60px;
+            width: 165px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: color 0.3s ease; 
+        }
+        
+        .form-container button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: #8A52FE;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+        
+        .form-container button:hover::before {
+            left: 0;
+        }
+
+        .form-container button:hover {
+            color: white;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+
+        .alert-info {
+            color: #0c5460;
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            body { margin: 80px; }
+            .container { padding: 18px; width: 85%; }
+        }
+
+        @media (max-width: 1100px) {
+            .container { padding: 16px; width: 80%; }
+        }
+
+        @media (max-width: 1000px) {
+            .container { padding: 14px; width: 75%; }
+            .form-container button { width: 140px; height: 50px; }
+        }
+
+        @media (max-width: 900px) {
+            body { margin: 60px; }
+            .container { padding: 12px; width: 70%; }
+            .form-container h1 { font-size: 24px; }
+            .form-container input, .form-container select, .form-container textarea { font-size: 13px; }
+            .form-container button { font-size: 14px; }
+        }
+
+        @media (max-width: 800px) {
+            .container { padding: 10px; width: 65%; }
+            .form-container h1 { font-size: 22px; }
+        }
+
+        @media (max-width: 700px) {
+            body { margin: 40px; }
+            .container { padding: 8px; width: 60%; }
+            .form-container h1 { font-size: 20px; }
+        }
+
+        @media (max-width: 600px) {
+            body { margin: 20px; }
+            .container { width: 90%; padding: 6px; margin-top: 50px; }
+            .form-container h1 { font-size: 18px; }
+            .form-container input, .form-container select, .form-container textarea { font-size: 12px; }
+            .alert { font-size: 12px; }
+        }
+
+        @media (max-width: 500px) {
+            .container { padding: 4px; width: 95%; }
+            .form-container h1 { font-size: 16px; }
+            .form-container button { width: 120px; height: 45px; }
+        }
+
+        @media (max-width: 400px) {
+            body { margin: 10px; }
+            .container { width: 98%; padding: 2px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); }
+            .form-container h1 { font-size: 14px; }
+            .form-container input, .form-container select, .form-container textarea { font-size: 10px; }
+            .alert { font-size: 10px; }
+        }
+
+        @media (max-width: 300px) {
+            body { margin: 5px; }
+            .container { width: 100%; padding: 1px; }
+            .form-container h1 { font-size: 12px; }
+            .form-container input, .form-container select, .form-container textarea { font-size: 8px; }
+            .form-container button { width: 100px; height: 40px; font-size: 10px; }
+            .alert { font-size: 8px; }
+        }
+
+        @media (max-width: 200px) {
+            body { margin: 2px; }
+            .container { width: 100%; padding: 0px; box-shadow: none; }
+            .form-container h1 { font-size: 10px; }
+            .form-container input, .form-container select, .form-container textarea { font-size: 7px; }
+            .alert { font-size: 7px; padding: 10px; }
+            .form-container button { width: 80px; height: 35px; font-size: 8px; }
+        }
+    </style>
+
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">
+                <a href="/"><img src="{{ url_for('static', filename='download.png') }}" alt="Logo"></a>
+            </div>
+            <!-- Checkbox for Hamburger Menu -->
+            <input type="checkbox" id="menu-toggle" />
+            <!-- Hamburger Menu Icon (Font Awesome) -->
+            <label class="menu-icon" for="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </label>
+    
+            <div class="navbar-menu">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="#About">About</a>
+                <a href="{{ url_for('policy') }}">Policy</a>
+                <a href="">Indicators</a>
+                <a href="{{ url_for('refer') }}">Refer</a>
+            
+                {% if current_user.is_authenticated %}
+                    {% if current_user.subscription_active %}
+                        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('register') }}">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    
+        <div class="navbar-right">
+            <button id="right-button">Contact</button>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+            {% else %}
+                <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+            {% endif %}
+        </div>
+    </nav>
+    <div class="container">
+        <!-- Flash Messages Section -->
+        {% with messages = get_flashed_messages(with_categories=True) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% if config %}
+            <h1>Welcome back, {{ current_user.username }}</h1>
+            <div>
+                <h2>Portfolio</h2>
+                <p>Asset: {{ config.asset_name }}</p>
+                <p>Trade Size: {{ config.trade_size_usdt }} USDT</p>
+                <p>Indicator: {{ config.indicator }}</p>
+                <p>Exchange: {{ config.exchange }}</p>
+            </div>
+            <div class="form-container">
+                <!-- Conditionally render Start/Stop Bot button -->
+                {% if user_bot_status == 'running' %}
+                    <form method="POST" action="{{ url_for('stop_bot') }}">
+                        <button type="submit" class="btn btn-danger">Stop Bot</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{{ url_for('start_bot') }}">
+                        <button type="submit" class="btn btn-success">Start Bot</button>
+                    </form>
+                {% endif %}
+                <!-- Debugging user_bot_status (remove after debugging) -->
+                <p>Current bot status: {{ user_bot_status }}</p>
+                <!-- Edit Configuration Button that redirects to Edit Config page -->
+                <form method="GET" action="{{ url_for('edit_config') }}">
+                    <button type="submit">Edit Configuration</button>
+                </form>
+            </div>
+        {% else %}
+            <div class="form-container">
+                <h1>Configure Trading Bot</h1>
+                <form method="POST" action="{{ url_for('dashboard') }}">
+                    {{ form.hidden_tag() }}
+                    <div>
+                        {{ form.api_key.label }} {{ form.api_key() }}
+                    </div>
+                    <div>
+                        {{ form.secret.label }} {{ form.secret() }}
+                    </div>
+                    <div>
+                        {{ form.asset_name.label }} {{ form.asset_name() }}
+                    </div>
+                    <div>
+                        {{ form.trade_size_usdt.label }} {{ form.trade_size_usdt() }}
+                    </div>
+                    <div>
+                        {{ form.indicator.label }} {{ form.indicator() }}
+                    </div>
+                    <div>
+                        {{ form.exchange.label }} {{ form.exchange() }}
+                    </div>
+                    <div>
+                        <button type="submit">Save Configuration</button>
+                    </div>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+    <script>
+        document.addEventListener('click', function (event) {
+            // Get the checkbox and the menu
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.querySelector('.navbar-menu');
+            const menuIcon = document.querySelector('.menu-icon');
+            // Check if the clicked area is not the menu or the icon
+            if (!menu.contains(event.target) && !menuToggle.contains(event.target) && !menuIcon.contains(event.target)) {
+                // Uncheck the checkbox to close the menu
+                menuToggle.checked = false;
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: whitesmoke; /* Ensure background color is white */
+            color: #333;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; /* Ensure vertical centering */
+            padding: 5px 30px; /* Reduce padding for minimal top margin */
+            z-index: 1000;
+            height: 55px;
+            background-color: white; /* Ensure navbar background is white */
+            color: black;
+        }
+        .custom-hr {
+            border: 0;
+            height: 1px; /* Adjust thickness */
+            background-color: black; /* Color of the line */
+            margin: 66px 0 1px 0;
+            width: 100%; /* Ensure it spans the full width */
+            z-index: 1; /* Ensure it's visible in the stacking order */
+            position: relative;
+        }
+
+        .navbar-left {
+            display: flex; /* Group logo and menu on the left */
+            align-items: center;
+        }
+
+        .navbar-logo {
+            font-size: 30px;
+            font-weight: bold;
+            margin-right: 100px;
+            color: black;
+        }
+
+        .navbar-logo img {
+            height: 55px; /* Increased logo height */
+            width: auto;  /* Maintain aspect ratio */
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 45px;
+            align-items: center;
+        }
+
+        .navbar-menu a {
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            font-style: inherit;
+            transition: color 0.3s ease;
+            padding-top: 5px; /* Reduce space above text */
+        }
+
+        .navbar-menu a:hover {
+            text-decoration: underline;
+            background-color: #8A52FE;
+        }
+
+        .navbar-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-right: 30px; /* Align the buttons to the right */
+        }
+
+        #right-button {
+            background-color: transparent;
+            border: none;
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            font-style: inherit;
+            transition: color 0.3s ease;
+            padding-top: 5px; /* Reduce space above text */
+        }
+
+        .navbar-signup {
+            padding: 8px 20px;
+            font-size: 15px;
+            text-transform: uppercase;
+            cursor: pointer;
+            background: black; /* Default background color */
+            color: white;
+            border: none;
+            height: 68px;
+            width: 120px;
+            position: relative; /* Needed for the pseudo-element */
+            overflow: hidden; /* Hide the animated background */
+        }
+
+        .navbar-signup span {
+            position: relative; /* Make sure text is above pseudo-element */
+            z-index: 2; /* Text is above the background */
+        }
+
+        .navbar-signup::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 100%; /* Start off-screen to the right */
+            width: 100%;
+            height: 100%;
+            background-color: #8B52FE; /* The hover color */
+            transition: left 0.4s ease; /* Controls the speed of the animation */
+            z-index: 1; /* Ensure it's behind the text */
+        }
+
+        .navbar-signup:hover::before {
+            left: 0; /* Slide the background from right to left */
+        }
+
+        .navbar-signup:hover span {
+            color: white; /* Keep text color white */
+        }
+
+        .pricing-container {
+            padding: 50px;
+            text-align: center;
+            background-color: white; /* Ensure pricing container background is white */
+            color: #1F0930;
+            border: solid 2px black;
+        }
+
+        .pricing-container h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+        }
+
+        .pricing-options {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .pricing-option {
+            background-color: white; /* Ensure pricing option background is white */
+            color: #1F0930;
+            padding: 30px;
+            border: 2px solid black;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 300px;
+            transition: transform 0.3s ease;
+        }
+
+        .pricing-option:hover {
+            transform: scale(1.05);
+        }
+
+        .pricing-option h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .pricing-option .price {
+            font-size: 2.5rem;
+            color: #1F0930;
+            margin-bottom: 20px;
+        }
+
+        .pricing-option ul {
+            list-style-type: none;
+            padding: 0;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .pricing-option ul li {
+            margin: 10px 0;
+        }
+
+        .pricing-option form {
+            margin-top: 1rem;
+        }
+
+        .pricing-option button {
+            background-color: black; /* Default background color */
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-option button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 100%; /* Start off-screen to the right */
+            width: 100%;
+            height: 100%;
+            background-color: #8B52FE; /* The hover color */
+            transition: left 0.4s ease; /* Controls the speed of the animation */
+            z-index: 1; /* Ensure it's behind the text */
+        }
+
+        .pricing-option button:hover::before {
+            left: 0; /* Slide the background from right to left */
+        }
+
+        .pricing-option button:hover {
+            color: white; /* Ensure text color is white */
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1200px) {
+            .pricing-container {
+                padding: 30px;
+            }
+
+            .pricing-container h1 {
+                font-size: 2rem;
+            }
+
+            .pricing-options {
+                gap: 20px;
+            }
+
+            .pricing-option {
+                padding: 20px;
+            }
+
+            .pricing-option h2 {
+                font-size: 1.8rem;
+            }
+
+            .pricing-option .price {
+                font-size: 2rem;
+            }
+
+            .pricing-option ul {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pricing-container {
+                padding: 20px;
+            }
+
+            .pricing-container h1 {
+                font-size: 1.8rem;
+            }
+
+            .pricing-options {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+
+            .pricing-option {
+                padding: 20px;
+                max-width: 90%;
+            }
+
+            .pricing-option h2 {
+                font-size: 1.6rem;
+            }
+
+            .pricing-option .price {
+                font-size: 1.8rem;
+            }
+
+            .pricing-option ul {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pricing-container {
+                padding: 15px;
+            }
+
+            .pricing-container h1 {
+                font-size: 1.5rem;
+            }
+
+            .pricing-option {
+                padding: 15px;
+                max-width: 100%;
+            }
+
+            .pricing-option h2 {
+                font-size: 1.4rem;
+            }
+
+            .pricing-option .price {
+                font-size: 1.5rem;
+            }
+
+            .pricing-option ul {
+                font-size: 0.9rem;
+            }
+
+            .pricing-option button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">
+                <a href="/"><img src="{{ url_for('static', filename='download.png') }}" alt="Logo"></a>
+            </div>
+            <div class="navbar-menu">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="#About">About</a>
+                <a href="#contact">Career</a>
+                <a href="{{ url_for('policy') }}">Policy</a>
+                <a href="">Indicators</a>
+            
+                {% if current_user.is_authenticated %}
+                    {% if current_user.subscription_active %}
+                        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('register') }}">Get Started</a>
+                {% endif %}
+            </div>
+        </div>
+    
+        <div class="navbar-right">
+            <button id="right-button">Contact</button>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+            {% else %}
+                <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+            {% endif %}
+        </div>
+    </nav>
+    
+    <div class="pricing-container">
+        <h1>Select Your Plan</h1>
+        <div class="pricing-options">
+            <div class="pricing-option">
+                <h2>1 Month</h2>
+                <div class="price">₹399.99</div>
+                <ul>
+                    <li>Beginner Plan</li>
+                    <li>1 Month</li>
+                    <li>7 Exchanges</li>
+                    <li>Unlimited Support</li>
+                </ul>
+                <form action="{{ url_for('payu_payment', plan='1_month') }}" method="post">
+                    <button type="submit">Select Plan</button>
+                </form>
+            </div>
+            <div class="pricing-option">
+                <h2>3 Months</h2>
+                <div class="price">₹999.99</div>
+                <ul>
+                    <li>Intermediate</li>
+                    <li>3 Months</li>
+                    <li>7 Exchanges</li>
+                    <li>Unlimited Support</li>
+                </ul>
+                <form action="{{ url_for('payu_payment', plan='3_months') }}" method="post">
+                    <button type="submit">Select Plan</button>
+                </form>
+            </div>
+            <div class="pricing-option">
+                <h2>6 Months</h2>
+                <div class="price">₹1599.99</div>
+                <ul>
+                    <li>Expert Plan</li>
+                    <li>6 Months</li>
+                    <li>7 exchanges</li>
+                    <li>Unlimited Support</li>
+                </ul>
+                <form action="{{ url_for('payu_payment', plan='6_months') }}" method="post">
+                    <button type="submit">Select Plan</button>
+                </form>
+            </div>
+            <div class="pricing-option">
+                <h2>1 Year</h2>
+                <div class="price">₹2799.99</div>
+                <ul>
+                    <li>Premium Plan</li>
+                    <li>365 days</li>
+                    <li>7 exchanges</li>
+                    <li>Premium Support</li>
+                </ul>
+                <form action="{{ url_for('payu_payment', plan='1_year') }}" method="post">
+                    <button type="submit">Select Plan</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

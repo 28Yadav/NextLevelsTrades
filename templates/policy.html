@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextLevelTrades Policy Page</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+
+  <style>
+    body{
+        background: white;
+    }
+    .container {
+      background-color: #ffffff;
+      color: #000;
+      padding: 20px;
+      margin: 50px auto;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 1000px;
+    }
+
+
+    p {
+      line-height: 1.6;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-left">
+        <div class="navbar-logo">
+            <a href="/"><img src="{{ url_for('static', filename='download.png') }}" alt="Logo"></a>
+        </div>
+        <div class="navbar-menu">
+          <a href="{{ url_for('home') }}">Home</a>
+            <a href="#About">About</a>
+            <a href="#contact">Career</a>
+            <a href="{{ url_for('policy') }}">Policy</a>
+            <a href="">Indicators</a>
+        
+            {% if current_user.is_authenticated %}
+                {% if current_user.subscription_active %}
+                    <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                {% endif %}
+            {% else %}
+                <a href="{{ url_for('register') }}">Get Started</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="navbar-right">
+        <button id="right-button">Contact</button>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+        {% else %}
+            <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+        {% endif %}
+    </div>
+</nav>
+
+
+  <div class="container">
+    <h1>NextLevelTrades Policy Page</h1>
+
+    <h2 id="introduction">1. Introduction</h2>
+    <p>Welcome to NextLevelTrades. This policy outlines the rules, regulations, and guidelines that govern your use of our trading bot. By using our services, you agree to comply with the terms set forth in this document.</p>
+
+    <h2 id="privacy">2. Privacy Policy</h2>
+    <p>Your privacy is important to us. We collect, use, and protect your personal information in accordance with applicable privacy laws. Please review our detailed privacy policy to understand how we handle your data.</p>
+
+    <h2 id="user-responsibilities">3. User Responsibilities</h2>
+    <p>Users are responsible for maintaining the confidentiality of their account information, including passwords. You agree to notify us immediately of any unauthorized use of your account.</p>
+
+    <h2 id="trading-rules">4. Trading Rules</h2>
+    <p>Our trading bot operates according to predefined algorithms and strategies. You are responsible for understanding these strategies and ensuring they meet your trading needs.</p>
+
+    <h2 id="risk-disclosure">5. Risk Disclosure</h2>
+    <p>Trading in cryptocurrencies involves substantial risk and may not be suitable for everyone. You should only trade with funds you can afford to lose. Please review our risk disclosure statement for more information.</p>
+
+    <h2 id="fees-charges">6. Fees and Charges</h2>
+    <p>We may charge fees for the use of our trading bot. All fees will be clearly disclosed before you commit to using the service.</p>
+
+    <h2 id="modifications-termination">7. Modifications and Termination</h2>
+    <p>We reserve the right to modify or terminate our services at any time. We will provide notice of significant changes to this policy.</p>
+
+    <h2 id="contact-info">8. Contact Information</h2>
+    <p>If you have any questions or concerns regarding this policy, please contact us at [your contact information].</p>
+
+    <h2 id="governing-law">9. Governing Law</h2>
+    <p>This policy shall be governed by and construed in accordance with the laws of [Your Jurisdiction].</p>
+
+    <!-- New sections -->
+    <h2 id="terms">10. Terms of Service</h2>
+    <p>These are the terms and conditions under which you use our services. By using our trading bot, you agree to adhere to these terms. We reserve the right to update these terms at any time, and your continued use of our services signifies your acceptance of any changes.</p>
+
+    <h2 id="accessibility">11. Accessibility Policy</h2>
+    <p>NextLevelTrades is committed to ensuring that our website and services are accessible to everyone. We strive to comply with all applicable accessibility standards and make continuous improvements to enhance accessibility.</p>
+  </div>
+</body>
+</html>

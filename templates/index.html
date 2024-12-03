@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextLevelTrades</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='download.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Play:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bellefair&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Quicksand:wght@300..700&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Agdasima:wght@400;700&display=swap" rel="stylesheet">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <div class="navbar-logo">
+                <a href="/"><img src="{{ url_for('static', filename='download.png') }}" alt="Logo"></a>
+            </div>
+            <!-- Checkbox for Hamburger Menu -->
+            <input type="checkbox" id="menu-toggle" />
+            <!-- Hamburger Menu Icon (Font Awesome) -->
+            <label class="menu-icon" for="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </label>
+    
+            <div class="navbar-menu">
+                <a href="{{ url_for('home') }}">Home</a>
+                <a href="#About">About</a>
+                <a href="{{ url_for('policy') }}">Policy</a>
+                <a href="">Indicators</a>
+    
+                {% if current_user.is_authenticated %}
+                    {% if current_user.subscription_active %}
+                        <a href="{{ url_for('dashboard') }}">Dashboard</a>
+                    {% endif %}
+                    <!-- Add Refer button for logged-in users -->
+                    <a href="{{ url_for('refer') }}" class="refer-button">Refer</a>
+                {% else %}
+                    <a href="{{ url_for('register') }}">Get Started</a>
+                {% endif %}
+            </div>
+        </div>    
+    
+        <div class="navbar-right">
+            <button id="right-button">Contact</button>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+            {% else %}
+                <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+            {% endif %}
+        </div>
+    </nav>
+        <hr class="custom-hr">
+        <section class="welcome">
+            <div class="welcome-left">
+                <h1>Unlock the <br> Door to <br>Prosperity</h1>
+                <p>Tired of manual trading? Our bot does the heavy <br> lifting, so you can focus on what matters.</p>
+        
+                <!-- Conditionally display buttons based on user status -->
+                {% if current_user.is_authenticated %}
+                    {% if current_user.subscription_active %}
+                        <a href="{{ url_for('dashboard') }}"><button class="wwelcome-button"><span>Dashboard <i class="fa-solid fa-angles-right" style="margin-left: 5px;"></i></span></button></a>
+                    {% else %}
+                        <a href="{{ url_for('pricing') }}"><button class="wwelcome-button"><span>View Pricing <i class="fa-solid fa-angles-right" style="margin-left: 5px;"></i></span></button></a>
+                    {% endif %}
+                {% else %}
+                    <a href="{{ url_for('register') }}"><button class="wwelcome-button"><span>Get started <i class="fa-solid fa-angles-right" style="margin-left: 5px;"></i></span></button></a>
+                {% endif %}
+        
+                <!-- Conditionally display the Login button -->
+                {% if not current_user.is_authenticated %}
+                    <a href="{{ url_for('login') }}"><button class="login-button" style="margin-left: 10px;">Login <i class="fa-solid fa-angles-right" style="margin-left: 5px;"></i></button></a>
+                {% endif %}
+            </div>
+            <div class="welcome-right">
+                <img src="{{ url_for('static', filename='nextimage.gif') }}" alt="Welcome Image" style="margin-left: 250px;">
+            </div>
+        </section>
+    </section>
+    
+    <section class="Second-page" id="About">
+        <div class="empty" style="height: 30px; width: 100%; background-color: transparent;"></div>
+        
+            <h1 id="second-h1">Made with best indicators to maximize your profits</h1>
+            <div class="non-marquee" style="display: flex;">
+                <span>Moving Average</span>
+                <span>Stochastic</span>
+                <span>MACD</span>
+                <span>ATR</span>
+                <span>VWAP</span>
+                <span>Fibonacci</span>
+                <span>RSI</span>
+                <span>Bollinger Bands</span>
+            </div>
+    </section>
+
+
+
+    <section class="click-section">
+        <h1>Fill, click, done.</h1>
+        <div class="steps-container">
+            <!-- Step 1 -->
+            <div class="step-box">
+                <h2>1</h2>
+                <p><strong>Fill The credentials</strong></p>
+                <p>Fill your Crdentials like Exchange api, and secret Key, Etc.</p>
+                <!-- Placeholder for image -->''
+                <img src="{{ url_for('static', filename='fill.png') }}" alt="Image">
+            </div>
+    
+            <!-- Step 2 -->
+            <div class="step-box">
+                <h2>2</h2>
+                <p><strong>Start The bot</strong></p>
+                <p>Start the bot after saving configuration.</p>
+                <!-- Placeholder for image -->
+                <img src="{{ url_for('static', filename='Click.png') }}" alt="Image" class="click-image">
+            </div>
+    
+            <!-- Step 3 -->
+            <div class="step-box">
+                <h2>3</h2>
+                <p><strong>Bot Started</strong></p>
+                <p>The Bot will start shortly.</p>
+                <!-- Placeholder for image -->
+                <img src="{{ url_for('static', filename='fill.png') }}" alt="Update automatically image" class="click-image">
+            </div>
+        </div>
+    </section>
+    <hr style="border-top: 0.07em solid rgb(193, 193, 193);">
+    <section class="extra-section">
+        <h1>Our bot offers</h1>
+        <div class="extra-container">
+            <!-- Box 1 -->
+            <div class="extra-box">
+                <!-- Placeholder for image -->
+                <img src="{{ url_for('static', filename='wallet-solid.svg') }}" alt="Icon 1">
+                <h3>Risk Management</h3>
+                <p>Our trading bot features exceptional risk management to ensure safer and more profitable trades..</p>
+            </div>
+    
+            <!-- Box 2 -->
+            <div class="extra-box">
+                <!-- Placeholder for image -->
+                <img src="{{ url_for('static', filename='trade icon.svg') }}" alt="Icon 2">
+                <h3>Best Indicators</h3>
+                <p>Our trading bot utilizes top-tier indicators for precise and accurate market analysis.</p>
+            </div>
+    
+            <!-- Box 3 -->
+            <div class="extra-box">
+                <!-- Placeholder for image -->
+                <img src="{{ url_for('static', filename='dollar icon.svg') }}" alt="Icon 3">
+                <h3>Multiple Exchanges</h3>
+                <p>Our trading bot supports multiple exchanges, offering flexibility and seamless trading across platforms.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="get-in-touch" id="contact">
+        <div class="contact-box">
+            <h2>Contact Us</h2>
+            <form action="mailto:nextlevelstrades@gmail.com" method="GET" enctype="text/plain">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter Your Name" required>
+    
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter Your Email" required>
+    
+                <label for="phone">Phone</label>
+                <input type="tel" id="phone" name="phone" placeholder="Enter Your Phone" required>
+    
+                <label for="message">Message</label>
+                <textarea id="message" name="message" placeholder="Your message here..." required></textarea>
+    
+                <button type="submit" id="contact-button">Submit</button>
+            </form>
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column footer-logo">
+                <img src="{{ url_for('static', filename='download.png') }}" alt="" height="40px">
+                <span>nextlevelstrades</span>
+            </div>
+            <div class="footer-column">
+                <h3>Policies</h3>
+                <a href="{{ url_for('policy') }}">Terms of service</a>
+                <a href="{{ url_for('policy') }}">Policies</a>
+            </div>
+            <div class="footer-column">
+                <h3>Subscription</h3>
+                <a href="{{ url_for('pricing') }}">Pricing</a>
+            </div>
+            <div class="footer-column">
+                <h3>Features</h3>
+                <a href="#">Indicators</a>
+                <a href="#">More features</a>
+            </div>
+            <div class="footer-column">
+                <h3>About Us</h3>
+                <a href="#">Contact Us</a>
+                <a href="#">Home</a>
+                <a href="{{ url_for('register') }}">Signup</a>
+            </div>
+        </div>
+        <div class="footer-social">
+            <a href="#" aria-label="Facebook">F</a>
+            <a href="#" aria-label="Twitter">T</a>
+            <a href="#" aria-label="RSS">R</a>
+            <a href="#" aria-label="Google Plus">G+</a>
+            <a href="#" aria-label="Flickr">F</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; Copyright. All rights reserved.
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('click', function (event) {
+            // Get the checkbox and the menu
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.querySelector('.navbar-menu');
+            const menuIcon = document.querySelector('.menu-icon');
+    
+            // Check if the clicked area is not the menu or the icon
+            if (!menu.contains(event.target) && !menuToggle.contains(event.target) && !menuIcon.contains(event.target)) {
+                // Uncheck the checkbox to close the menu
+                menuToggle.checked = false;
+            }
+        });
+    </script>
+    
+</body>
+
+</html>
