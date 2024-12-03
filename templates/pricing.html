@@ -423,5 +423,19 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('click', function (event) {
+            // Get the checkbox and the menu
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.querySelector('.navbar-menu');
+            const menuIcon = document.querySelector('.menu-icon');
+    
+            // Check if the clicked area is not the menu or the icon
+            if (!menu.contains(event.target) && !menuToggle.contains(event.target) && !menuIcon.contains(event.target)) {
+                // Uncheck the checkbox to close the menu
+                menuToggle.checked = false;
+            }
+        });
+    </script>
 </body>
 </html>
