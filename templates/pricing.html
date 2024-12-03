@@ -6,6 +6,8 @@
     <title>Pricing</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='download.png') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body, html {
             margin: 0;
@@ -14,123 +16,7 @@
             background-color: whitesmoke; /* Ensure background color is white */
             color: #333;
         }
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center; /* Ensure vertical centering */
-            padding: 5px 30px; /* Reduce padding for minimal top margin */
-            z-index: 1000;
-            height: 55px;
-            background-color: white; /* Ensure navbar background is white */
-            color: black;
-        }
-        .custom-hr {
-            border: 0;
-            height: 1px; /* Adjust thickness */
-            background-color: black; /* Color of the line */
-            margin: 66px 0 1px 0;
-            width: 100%; /* Ensure it spans the full width */
-            z-index: 1; /* Ensure it's visible in the stacking order */
-            position: relative;
-        }
-
-        .navbar-left {
-            display: flex; /* Group logo and menu on the left */
-            align-items: center;
-        }
-
-        .navbar-logo {
-            font-size: 30px;
-            font-weight: bold;
-            margin-right: 100px;
-            color: black;
-        }
-
-        .navbar-logo img {
-            height: 55px; /* Increased logo height */
-            width: auto;  /* Maintain aspect ratio */
-        }
-
-        .navbar-menu {
-            display: flex;
-            gap: 45px;
-            align-items: center;
-        }
-
-        .navbar-menu a {
-            text-decoration: none;
-            color: black;
-            font-size: 18px;
-            font-style: inherit;
-            transition: color 0.3s ease;
-            padding-top: 5px; /* Reduce space above text */
-        }
-
-        .navbar-menu a:hover {
-            text-decoration: underline;
-            background-color: #8A52FE;
-        }
-
-        .navbar-right {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-right: 30px; /* Align the buttons to the right */
-        }
-
-        #right-button {
-            background-color: transparent;
-            border: none;
-            text-decoration: none;
-            color: black;
-            font-size: 18px;
-            font-style: inherit;
-            transition: color 0.3s ease;
-            padding-top: 5px; /* Reduce space above text */
-        }
-
-        .navbar-signup {
-            padding: 8px 20px;
-            font-size: 15px;
-            text-transform: uppercase;
-            cursor: pointer;
-            background: black; /* Default background color */
-            color: white;
-            border: none;
-            height: 68px;
-            width: 120px;
-            position: relative; /* Needed for the pseudo-element */
-            overflow: hidden; /* Hide the animated background */
-        }
-
-        .navbar-signup span {
-            position: relative; /* Make sure text is above pseudo-element */
-            z-index: 2; /* Text is above the background */
-        }
-
-        .navbar-signup::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 100%; /* Start off-screen to the right */
-            width: 100%;
-            height: 100%;
-            background-color: #8B52FE; /* The hover color */
-            transition: left 0.4s ease; /* Controls the speed of the animation */
-            z-index: 1; /* Ensure it's behind the text */
-        }
-
-        .navbar-signup:hover::before {
-            left: 0; /* Slide the background from right to left */
-        }
-
-        .navbar-signup:hover span {
-            color: white; /* Keep text color white */
-        }
-
+        
         .pricing-container {
             padding: 50px;
             text-align: center;
