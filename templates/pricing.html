@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     <style>
         body, html {
             margin: 0;
@@ -330,22 +331,30 @@
             <div class="navbar-logo">
                 <a href="/"><img src="{{ url_for('static', filename='download.png') }}" alt="Logo"></a>
             </div>
+            <!-- Checkbox for Hamburger Menu -->
+            <input type="checkbox" id="menu-toggle" />
+            <!-- Hamburger Menu Icon (Font Awesome) -->
+            <label class="menu-icon" for="menu-toggle">
+                <i class="fa fa-bars"></i>
+            </label>
+    
             <div class="navbar-menu">
                 <a href="{{ url_for('home') }}">Home</a>
                 <a href="#About">About</a>
-                <a href="#contact">Career</a>
                 <a href="{{ url_for('policy') }}">Policy</a>
                 <a href="">Indicators</a>
-            
+    
                 {% if current_user.is_authenticated %}
                     {% if current_user.subscription_active %}
                         <a href="{{ url_for('dashboard') }}">Dashboard</a>
                     {% endif %}
+                    <!-- Add Refer button for logged-in users -->
+                    <a href="{{ url_for('refer') }}" class="refer-button">Refer</a>
                 {% else %}
                     <a href="{{ url_for('register') }}">Get Started</a>
                 {% endif %}
             </div>
-        </div>
+        </div>    
     
         <div class="navbar-right">
             <button id="right-button">Contact</button>
