@@ -75,7 +75,7 @@
             <div class="welcome-left">
                 <h1>Unlock the <br> Door to <br>Prosperity</h1>
                 <p>Tired of manual trading? Our bot does the heavy <br> lifting, so you can focus on what matters.</p>
-        
+                <div class="button-container">
                 <!-- Conditionally display buttons based on user status -->
                 {% if current_user.is_authenticated %}
                     {% if current_user.subscription_active %}
@@ -92,9 +92,11 @@
                     <a href="{{ url_for('login') }}"><button class="login-button" style="margin-left: 10px;">Login <i class="fa-solid fa-angles-right" style="margin-left: 5px;"></i></button></a>
                 {% endif %}
             </div>
+        </div>
             <div class="welcome-right">
                 <img src="{{ url_for('static', filename='nextimage.gif') }}" alt="Welcome Image" style="margin-left: 250px;">
             </div>
+
         </section>
     </section>
     
