@@ -106,24 +106,35 @@
                 <a href="#About">About</a>
                 <a href="{{ url_for('policy') }}">Policy</a>
                 <a href="">Indicators</a>
-            
+    
                 {% if current_user.is_authenticated %}
                     {% if current_user.subscription_active %}
                         <a href="{{ url_for('dashboard') }}">Dashboard</a>
                     {% endif %}
+                    <!-- Add Refer button for logged-in users -->
+                    <a href="{{ url_for('refer') }}" class="refer-button">Refer</a>
                 {% else %}
                     <a href="{{ url_for('register') }}">Get Started</a>
                 {% endif %}
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" id="ram">Logout</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" id="ramm">Sign Up</a>
+            {% endif %}
             </div>
-        </div>
+        </div>    
     
         <div class="navbar-right">
+            <div class="navbar-menu">
+
+            
             <button id="right-button">Contact</button>
             {% if current_user.is_authenticated %}
-                <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+                <a href="{{ url_for('logout') }}" ><button class="navbar-signup"  style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
             {% else %}
-                <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+                <a href="{{ url_for('register') }}"><button class="navbar-signup" span>Sign Up</span></button></a>
             {% endif %}
+        </div>
         </div>
     </nav>
     <h1>Refer and Earn</h1>
