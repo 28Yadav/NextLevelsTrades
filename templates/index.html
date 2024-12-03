@@ -58,16 +58,25 @@
                 {% else %}
                     <a href="{{ url_for('register') }}">Get Started</a>
                 {% endif %}
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" id="ram">Logout</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" id="ramm">Sign Up</a>
+            {% endif %}
             </div>
         </div>    
     
         <div class="navbar-right">
+            <div class="navbar-menu">
+
+            
             <button id="right-button">Contact</button>
             {% if current_user.is_authenticated %}
-                <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+                <a href="{{ url_for('logout') }}" ><button class="navbar-signup"  style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
             {% else %}
-                <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+                <a href="{{ url_for('register') }}"><button class="navbar-signup" span>Sign Up</span></button></a>
             {% endif %}
+        </div>
         </div>
     </nav>
         <hr class="custom-hr">
@@ -75,7 +84,6 @@
             <div class="welcome-left">
                 <h1>Unlock the <br> Door to <br>Prosperity</h1>
                 <p>Tired of manual trading? Our bot does the heavy <br> lifting, so you can focus on what matters.</p>
-                <div class="button-container">
                 <!-- Conditionally display buttons based on user status -->
                 {% if current_user.is_authenticated %}
                     {% if current_user.subscription_active %}
@@ -91,7 +99,6 @@
                 {% if not current_user.is_authenticated %}
                     <a href="{{ url_for('login') }}"><button class="login-button" style="margin-left: 10px;">Login <i class="fa-solid fa-angles-right" style="margin-left: 5px;"></i></button></a>
                 {% endif %}
-            </div>
         </div>
             <div class="welcome-right">
                 <img src="{{ url_for('static', filename='nextimage.gif') }}" alt="Welcome Image" style="margin-left: 250px;">
