@@ -835,9 +835,9 @@ body {
     /* Reduce button width and height */
     .wwelcome-button,
     .login-button {
-        width: 100%;
-        height: 35px;
-        font-size: 14px;
+        width: 145px;
+        height: 30px;
+        font-size: 12px;
     }
 
     /* Footer social icon size adjustments */
@@ -847,7 +847,7 @@ body {
         font-size: 14px;
     }
     .welcome{
-        height: 48h;
+        height: 40vh;
     }
 
     /* Step-box adjustments for extra small screens */
