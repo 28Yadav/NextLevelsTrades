@@ -580,6 +580,13 @@ body {
     .custom-hr {
         display: none;
     }
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        margin-top: 20px;
+    }
 
     /* Navbar adjustments */
     .navbar {
@@ -660,7 +667,7 @@ body {
         flex-direction: column;
         text-align: left;
         justify-content: flex-start;
-        height: 70vh;
+        height: 60vh;
         padding: 40px 15px 0;
     }
 
@@ -786,6 +793,13 @@ body {
 
 /* For screens larger than 992px */
 @media (min-width: 993px) {
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+    }
     /* Hide the hamburger icon and checkbox on larger screens */
     .menu-icon {
         display: none;
@@ -825,6 +839,9 @@ body {
         font-size: 32px;
         line-height: 1.1;
     }
+    .welcome {
+        height: 50vh; /* Reduce height for smaller screens */
+    }
 
     /* Reduce paragraph font size */
     .welcome-left p {
@@ -859,3 +876,4 @@ body {
         width: 90%;
     }
 }
+
