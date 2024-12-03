@@ -807,3 +807,55 @@ body {
         display: flex;
     }
 }
+/* For screens smaller than 480px (Extra small devices) */
+@media (max-width: 480px) {
+    /* Adjust navbar height and padding */
+    .navbar {
+        padding: 5px 10px;
+        height: 45px;
+    }
+
+    /* Reduce navbar logo size */
+    .navbar-logo img {
+        height: 30px;
+    }
+
+    /* Adjust heading font size and line-height in welcome section */
+    .welcome-left h1 {
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    /* Reduce paragraph font size */
+    .welcome-left p {
+        font-size: 16px;
+        margin-top: 5px;
+    }
+
+    /* Reduce button width and height */
+    .wwelcome-button,
+    .login-button {
+        width: 100%;
+        height: 35px;
+        font-size: 14px;
+    }
+
+    /* Footer social icon size adjustments */
+    .footer-social a {
+        width: 30px;
+        height: 30px;
+        font-size: 14px;
+    }
+
+    /* Step-box adjustments for extra small screens */
+    .step-box {
+        padding: 20px;
+        height: auto;
+    }
+
+    /* Extra-box adjustments */
+    .extra-box {
+        padding: 15px;
+        width: 90%;
+    }
+}
