@@ -239,16 +239,25 @@
                 {% else %}
                     <a href="{{ url_for('register') }}">Get Started</a>
                 {% endif %}
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('logout') }}" id="ram">Logout</a>
+            {% else %}
+                <a href="{{ url_for('register') }}" id="ramm">Sign Up</a>
+            {% endif %}
             </div>
         </div>    
     
         <div class="navbar-right">
+            <div class="navbar-menu">
+
+            
             <button id="right-button">Contact</button>
             {% if current_user.is_authenticated %}
-                <a href="{{ url_for('logout') }}" ><button class="navbar-signup" style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
+                <a href="{{ url_for('logout') }}" ><button class="navbar-signup"  style="color: white; text-decoration: none;"><span>Logout</span> </button></a>
             {% else %}
-                <a href="{{ url_for('register') }}"><button class="navbar-signup"><span>Sign Up</span></button></a>
+                <a href="{{ url_for('register') }}"><button class="navbar-signup" span>Sign Up</span></button></a>
             {% endif %}
+        </div>
         </div>
     </nav>
     
