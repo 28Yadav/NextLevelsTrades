@@ -580,13 +580,6 @@ body {
     .custom-hr {
         display: none;
     }
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        margin-top: 20px;
-    }
 
     /* Navbar adjustments */
     .navbar {
@@ -667,7 +660,7 @@ body {
         flex-direction: column;
         text-align: left;
         justify-content: flex-start;
-        height: 60vh;
+        height: 70vh;
         padding: 40px 15px 0;
     }
 
@@ -690,23 +683,19 @@ body {
         margin-top: 15px;
         margin-bottom: 20px;
     }
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
-        padding: 0;
-    }
-
+    /* Adjust button sizes, center them, and add line breaks */
     .wwelcome-button,
     .login-button {
         width: 80%;
         max-width: 200px;
         height: 45px;
-        margin: 0 auto;
-        text-align: center;
+        margin: 10px auto;
+    }
+    /* Arrange buttons in a column with spacing */
+    .button-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
     /* Second page marquee effect for smaller screens */
     .non-marquee {
@@ -762,7 +751,7 @@ body {
 
     /* Further reduce welcome section height and adjust text */
     .welcome {
-        height: 55vh;
+        height: 50vh;
         padding-top: 30px;
     }
 
@@ -780,23 +769,11 @@ body {
         margin-top: 10px;
     }
 
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
-        padding: 0;
-    }
-
+    /* Button adjustments */
     .wwelcome-button,
     .login-button {
-        width: 80%;
-        max-width: 200px;
-        height: 45px;
-        margin: 0 auto;
-        text-align: center;
+        width: 90%;
+        height: 40px;
     }
 
     /* Prevent horizontal overflow */
@@ -809,13 +786,6 @@ body {
 
 /* For screens larger than 992px */
 @media (min-width: 993px) {
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 8px;
-        margin-top: 15px;
-    }
     /* Hide the hamburger icon and checkbox on larger screens */
     .menu-icon {
         display: none;
@@ -855,9 +825,6 @@ body {
         font-size: 32px;
         line-height: 1.1;
     }
-    .welcome {
-        height: 50vh; /* Reduce height for smaller screens */
-    }
 
     /* Reduce paragraph font size */
     .welcome-left p {
@@ -865,23 +832,12 @@ body {
         margin-top: 5px;
     }
 
-    .button-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        width: 100%;
-        padding: 0;
-    }
-
+    /* Reduce button width and height */
     .wwelcome-button,
     .login-button {
-        width: 80%;
-        max-width: 200px;
-        height: 45px;
-        margin: 0 auto;
-        text-align: center;
+        width: 100%;
+        height: 35px;
+        font-size: 14px;
     }
 
     /* Footer social icon size adjustments */
@@ -889,6 +845,9 @@ body {
         width: 30px;
         height: 30px;
         font-size: 14px;
+    }
+    .welcome{
+        height: 48h;
     }
 
     /* Step-box adjustments for extra small screens */
