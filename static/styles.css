@@ -494,6 +494,12 @@ body {
     font-weight: 700;
     color: #fff;
 }
+#ram{
+    display: none;
+}
+#ramm{
+    display: none;
+}
 
 .footer-column a {
     display: block;
@@ -619,7 +625,7 @@ body {
     }
 
     /* Show the menu when the checkbox is checked */
-    #menu-toggle:checked + label + .navbar-menu {
+    #menu-toggle:checked + label + .navbar-menu  {
         display: flex;
     }
 
@@ -635,6 +641,12 @@ body {
         text-decoration: none;
         font-size: 16px;
         border-radius: 5px;
+    }
+    #ram{
+        display: block;
+    }
+    #ramm{
+        display: block;
     }
 
     /* Close the menu when a link is clicked */
@@ -690,6 +702,9 @@ body {
         max-width: 200px;
         height: 45px;
         margin: 10px auto;
+    }
+    #About h1{
+        font-size: 50px;
     }
     /* Arrange buttons in a column with spacing */
     .button-container {
@@ -848,6 +863,10 @@ body {
     }
     .welcome{
         height: 40vh;
+    }
+    #About h1{
+        font-size: 30px;
+        margin-left: 35px;
     }
 
     /* Step-box adjustments for extra small screens */
