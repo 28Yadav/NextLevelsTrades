@@ -173,6 +173,7 @@ class TradingBotConfig(db.Model):
     asset_name = db.Column(db.String(20), nullable=False)
     trade_size_usdt = db.Column(db.Float, nullable=False)
     indicator = db.Column(db.String(20), nullable=False)
+    timeframe = db.Column(db.String(20), nullable=False)
     exchange = db.Column(db.String(20), nullable=False)
 
 class RegistrationForm(FlaskForm):
@@ -247,7 +248,18 @@ class DashboardForm(FlaskForm):
                                 ('bollinger', 'Bollinger Bands')
                             ], 
                             validators=[DataRequired()])
-    
+    timeframe = SelectField('timeframe',
+                            choices=[
+                                ('1m' , '1m'),
+                                ('5m', '5m'),
+                                ('15m', '15m'),
+                                ('1h', '1h'),
+                                ('6h' , '6h'),
+                                ('12h' , '12h'),
+                                ('1d' , '1d'),
+                                ('7d', '7d')
+                            ],
+                            validators=[DataRequired()])
     exchange = SelectField('Exchange', 
                            choices=[
                                ('binance', 'Binance'), 
@@ -582,6 +594,7 @@ def dashboard():
             config.asset_name = form.asset_name.data
             config.trade_size_usdt = form.trade_size_usdt.data
             config.indicator = form.indicator.data
+            config.timeframe = form.timeframe.data
             config.exchange = form.exchange.data
  
             db.session.add(config)
@@ -628,6 +641,7 @@ def start_bot():
             assets=assets,
             trade_size_usdt=config.trade_size_usdt,
             indicator=config.indicator,
+            timeframe= config.timeframe,
             exchange=config.exchange
         )
         active_bots[current_user.id] = bot
@@ -699,6 +713,7 @@ def edit_config():
         config.asset_name = form.asset_name.data
         config.trade_size_usdt = form.trade_size_usdt.data
         config.indicator = form.indicator.data
+        config.timeframe = form.timeframe.data
         config.exchange = form.exchange.data
         db.session.commit()
         flash('Configuration updated successfully!', 'success')
