@@ -20,7 +20,7 @@
             justify-content: flex-start;
             align-items: center;
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .container {
@@ -267,6 +267,7 @@
                 <p>Asset: {{ config.asset_name }}</p>
                 <p>Trade Size: {{ config.trade_size_usdt }} USDT</p>
                 <p>Indicator: {{ config.indicator }}</p>
+                <p>Timeframe: {{ config.timeframe }}</p>
                 <p>Exchange: {{ config.exchange }}</p>
             </div>
             <div class="form-container">
@@ -306,6 +307,9 @@
                     </div>
                     <div>
                         {{ form.indicator.label }} {{ form.indicator() }}
+                    </div>
+                    <div>
+                        {{ form.timeframe.label }} {{ form.timeframe() }}
                     </div>
                     <div>
                         {{ form.exchange.label }} {{ form.exchange() }}
