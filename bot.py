@@ -6,7 +6,7 @@ import asyncio
 from utils import log_info, log_error
 
 class TradingBot:
-    def __init__(self, api_key, secret, assets, trade_size_usdt, indicator, exchange):
+    def __init__(self, api_key, secret, assets, trade_size_usdt, indicator, exchange, timeframe):
         self.api_key = api_key
         self.secret = secret
 
@@ -18,6 +18,7 @@ class TradingBot:
             raise ValueError("Assets must be either a string or a list of asset names.")
 
         self.trade_size_usdt = trade_size_usdt
+        self.timeframe = timeframe
         self.indicator = indicator
         self.exchange = exchange.lower()
         self.trade_states = {asset: {"trade_started": False, "position_type": None, "entry_price": None} for asset in self.assets}
@@ -65,7 +66,7 @@ class TradingBot:
 
     async def fetch_historical_prices(self, asset_name, limit):
         try:
-            ohlcv = self.ccxt_exchange.fetch_ohlcv(asset_name, timeframe='15m', limit=limit)
+            ohlcv = self.ccxt_exchange.fetch_ohlcv(asset_name, timeframe=self.timeframe, limit=limit)
             df = pd.DataFrame(ohlcv, columns=['timestamp', 'open', 'high', 'low', 'close', 'volume'])
             df['timestamp'] = pd.to_datetime(df['timestamp'], unit='ms')
             df.set_index('timestamp', inplace=True)
