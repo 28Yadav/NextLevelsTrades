@@ -264,6 +264,7 @@
     <div class="pricing-container">
         <h1>Select Your Plan</h1>
         <div class="pricing-options">
+            <!-- 1 Month Plan -->
             <div class="pricing-option">
                 <h2>1 Month</h2>
                 <div class="price">₹399.99</div>
@@ -273,51 +274,66 @@
                     <li>7 Exchanges</li>
                     <li>Unlimited Support</li>
                 </ul>
-                <form action="{{ url_for('payu_payment', plan='1_month') }}" method="post">
+                <form action="{{ url_for('nowpayments_payment', plan='1_month') }}" method="post">
+                    <label for="referral_code_1_month">Referral Code (Optional):</label>
+                    <input type="text" name="referral_code" id="referral_code_1_month" placeholder="Enter referral code" style="height: 20px; width: 150px; border: 1px solid black; border-radius: 5px;">
                     <button type="submit">Select Plan</button>
                 </form>
             </div>
+
+            <!-- 3 Months Plan -->
             <div class="pricing-option">
                 <h2>3 Months</h2>
                 <div class="price">₹999.99</div>
                 <ul>
-                    <li>Intermediate</li>
+                    <li>Intermediate Plan</li>
                     <li>3 Months</li>
                     <li>7 Exchanges</li>
                     <li>Unlimited Support</li>
                 </ul>
-                <form action="{{ url_for('payu_payment', plan='3_months') }}" method="post">
+                <form action="{{ url_for('nowpayments_payment', plan='3_months') }}" method="post">
+                    <label for="referral_code_3_months">Referral Code (Optional):</label>
+                    <input type="text" name="referral_code" id="referral_code_3_months" placeholder="Enter referral code" style="height: 20px; width: 150px; border: 1px solid black; border-radius: 5px;">
                     <button type="submit">Select Plan</button>
                 </form>
             </div>
+
+            <!-- 6 Months Plan -->
             <div class="pricing-option">
                 <h2>6 Months</h2>
                 <div class="price">₹1599.99</div>
                 <ul>
                     <li>Expert Plan</li>
                     <li>6 Months</li>
-                    <li>7 exchanges</li>
+                    <li>7 Exchanges</li>
                     <li>Unlimited Support</li>
                 </ul>
-                <form action="{{ url_for('payu_payment', plan='6_months') }}" method="post">
+                <form action="{{ url_for('nowpayments_payment', plan='6_months') }}" method="post">
+                    <label for="referral_code_6_months">Referral Code (Optional):</label>
+                    <input type="text" name="referral_code" id="referral_code_6_months" placeholder="Enter referral code" style="height: 20px; width: 150px; border: 1px solid black; border-radius: 5px;">
                     <button type="submit">Select Plan</button>
                 </form>
             </div>
+
+            <!-- 1 Year Plan -->
             <div class="pricing-option">
                 <h2>1 Year</h2>
                 <div class="price">₹2799.99</div>
                 <ul>
                     <li>Premium Plan</li>
-                    <li>365 days</li>
-                    <li>7 exchanges</li>
+                    <li>1 Year</li>
+                    <li>7 Exchanges</li>
                     <li>Premium Support</li>
                 </ul>
-                <form action="{{ url_for('payu_payment', plan='1_year') }}" method="post">
+                <form action="{{ url_for('nowpayments_payment', plan='1_year') }}" method="post">
+                    <label for="referral_code_1_year">Referral Code (Optional):</label>
+                    <input type="text" name="referral_code" id="referral_code_1_year" placeholder="Enter referral code" style="height: 20px; width: 150px; border: 1px solid black; border-radius: 5px;">
                     <button type="submit">Select Plan</button>
                 </form>
             </div>
         </div>
     </div>
+
     <script>
         document.addEventListener('click', function (event) {
             // Get the checkbox and the menu
