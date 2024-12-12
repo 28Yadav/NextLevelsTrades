@@ -55,6 +55,9 @@ PAYU_KEY = "BfHohf"
 PAYU_SALT = "YdxXtt8DiMRExSSRTE5itKa1Auu3FpfR"
 PAYU_URL = "https://test.payu.in/_payment"  # Use https://secure.payu.in/_payment 
 
+NOWPAYMENTS_API_KEY = "4AYSPQK-7VR4MSB-P87FM1X-H43V2CQ"  # Your merchant API key
+NOWPAYMENTS_API_URL = "https://api.nowpayments.io/v1/invoice"
+
 
 logging.basicConfig(level=logging.DEBUG)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(hours=1)
@@ -393,53 +396,60 @@ def resend_otp():
     flash('A new OTP has been sent to your email.', 'info')
     return redirect(url_for('verify_otp'))
 
+# Route to display pricing plans
 @app.route('/pricing')
 @login_required
 def pricing():
     return render_template('pricing.html')
 
-@app.route('/payu_payment/<plan>', methods=['POST'])
+
+# Route to create NowPayments invoice
+@app.route('/nowpayments_payment/<plan>', methods=['POST'])
 @login_required
-def payu_payment(plan):
+def nowpayments_payment(plan):
     plans = get_plans()
 
     if plan not in plans:
         flash('Invalid plan selected.', 'danger')
         return redirect(url_for('pricing'))
 
-    # Get points usage from the form
-    use_points = request.form.get('use_points', 'false') == 'true'
-
-
-
-    txnid = f"txn_{datetime.utcnow().timestamp()}_{current_user.id}"
-
-    # Prepare PayU payment data
-    data = {
-        "key": PAYU_KEY,
-        "txnid": txnid,
-        "amount": plans[plan]["amount"],
-        "productinfo": plan.replace("_", " ").title(),
-        "firstname": current_user.username,
-        "email": current_user.email,
-        "phone": "9999999999",  
-        "surl": url_for('payu_success', plan=plan, _external=True),
-        "furl": url_for('payu_failure', _external=True),
-        "hash": generate_payu_hash({
-            "key": PAYU_KEY,
-            "txnid": txnid,
-            "amount": plans[plan]["amount"],
-            "productinfo": plan.replace("_", " ").title(),
-            "firstname": current_user.username,
-            "email": current_user.email,
-        })
+    # Create an invoice through NowPayments API
+    amount = plans[plan]["amount"]
+    nowpayments_data = {
+        "price_amount": amount,
+        "price_currency": "USD",
+        "order_id": f"txn_{datetime.utcnow().timestamp()}_{current_user.id}",
+        "success_url": url_for('nowpayments_success', plan=plan, _external=True),
+        "ipn_callback_url": "https://your-ipn-url.com/callback",  # Optional, for notifications
+        "cancel_url": url_for('nowpayments_failure', _external=True),
     }
 
-    return render_template('payu_redirect.html', data=data, payu_url=PAYU_URL)
+    headers = {
+        "x-api-key": NOWPAYMENTS_API_KEY,
+        "Content-Type": "application/json"
+    }
 
-@app.route('/payu_success/<plan>', methods=['POST'])
+    try:
+        response = requests.post(NOWPAYMENTS_API_URL, json=nowpayments_data, headers=headers)
+        response_data = response.json()
+
+        if response.status_code == 200 and response_data.get("invoice_url"):
+            invoice_url = response_data["invoice_url"]
+            return redirect(invoice_url)  # Redirect user to NowPayments invoice page
+        else:
+            flash("Error creating payment invoice. Please try again.", "danger")
+            logging.error(f"NowPayments error: {response_data}")
+            return redirect(url_for('pricing'))
+    except Exception as e:
+        logging.error(f"Exception while creating NowPayments invoice: {str(e)}")
+        flash("Payment service is currently unavailable.", "danger")
+        return redirect(url_for('pricing'))
+
+
+# Success route after payment
+@app.route('/nowpayments_success/<plan>')
 @login_required
-def payu_success(plan):
+def nowpayments_success(plan):
     referral_code = request.args.get('referral_code', '').strip()
     logging.info(f"Referral code received: {referral_code}")
 
@@ -462,7 +472,7 @@ def payu_success(plan):
     current_user.subscription_end = datetime.utcnow() + plans[plan]["duration"]
     current_user.subscription_active = True
 
-    # Award points to the referrer if valid and not self-referral
+    # Award points to the referrer
     if referrer:
         referrer.points += 10
         logging.info(f"Referrer points updated to: {referrer.points}")
@@ -476,12 +486,16 @@ def payu_success(plan):
         flash(f'Referrer {referrer.username} has been credited with 10 points.', 'info')
     return redirect(url_for('home'))
 
-@app.route('/payu_failure', methods=['POST'])
+
+# Failure route after payment failure
+@app.route('/nowpayments_failure')
 @login_required
-def payu_failure():
-    flash('Payment failed. Please try again.', 'danger')
+def nowpayments_failure():
+    flash('Payment failed or cancelled. Please try again.', 'danger')
     return redirect(url_for('pricing'))
 
+
+# Background job to check expired subscriptions
 def check_expired_subscriptions():
     with app.app_context():
         now = datetime.utcnow()
