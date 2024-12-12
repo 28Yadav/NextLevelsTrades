@@ -3,162 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirecting to PayU</title>
+    <title>Proceed to Payment</title>
     <style>
-        /* General body styling */
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
+            font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0;
+            display: flex; justify-content: center; align-items: center; height: 100vh;
         }
-
-        .referr {
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            padding: 20px;
-            box-sizing: border-box;
+        .container {
+            background-color: white; padding: 20px; border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); width: 100%; max-width: 400px; text-align: center;
         }
-
-        /* Form container styling */
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 100%;
-            box-sizing: border-box;
-        }
-
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #555;
-        }
-
+        h2 { margin-bottom: 20px; color: #333; }
+        label { font-weight: bold; display: block; margin-bottom: 10px; text-align: left; }
         input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+            width: 100%; padding: 10px; margin-bottom: 20px; border: 1px solid #ddd;
+            border-radius: 5px; box-sizing: border-box;
         }
-
         button {
-            background-color: black;
-            color: #fff;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 4px;
-            font-size: 16px;
-            cursor: pointer;
+            background-color: black; color: white; border: none; padding: 10px 20px;
+            border-radius: 5px; cursor: pointer; transition: background-color 0.3s;
         }
-
         button:hover {
-            background-color: #0056b3;
-        }
-
-        button:active {
-            background-color: #003d80;
-        }
-
-        /* Responsive design using media queries */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-
-            .referr {
-                padding: 10px;
-            }
-
-            form {
-                padding: 15px;
-            }
-
-            h2 {
-                font-size: 1.2rem;
-            }
-
-            button {
-                font-size: 14px;
-                padding: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            h2 {
-                font-size: 1rem;
-            }
-
-            label {
-                font-size: 0.9rem;
-            }
-
-            input[type="text"] {
-                font-size: 0.9rem;
-            }
-
-            button {
-                font-size: 12px;
-                padding: 8px;
-            }
+            background-color: #555;
         }
     </style>
 </head>
 <body>
-    <div class="referr">
-        <h2>Please add a referral code if you have</h2>
-        <form name="payuForm" method="POST" action="{{ payu_url }}">
-            <input type="hidden" name="key" value="{{ data.key }}" />
-            <input type="hidden" name="txnid" value="{{ data.txnid }}" />
-            <input type="hidden" name="amount" value="{{ data.amount }}" />
-            <input type="hidden" name="productinfo" value="{{ data.productinfo }}" />
-            <input type="hidden" name="firstname" value="{{ data.firstname }}" />
-            <input type="hidden" name="email" value="{{ data.email }}" />
-            <input type="hidden" name="phone" value="{{ data.phone }}" />
-            <input type="hidden" name="surl" id="surl" value="{{ data.surl }}" />
-            <input type="hidden" name="furl" value="{{ data.furl }}" />
-            <input type="hidden" name="hash" value="{{ data.hash }}" />
-
-            <!-- Referral Code Input -->
-            <label for="referral_code">Referral Code (optional):</label>
-            <input type="text" id="referral_code" name="referral_code" />
-
-            <!-- Submit Button -->
-            <button type="submit" onclick="updateSuccessURL()">Proceed to Pay</button>
+    <div class="container">
+        <h2>Enter Referral Code (Optional)</h2>
+        <form action="{{ url_for('nowpayments_payment', plan=plan) }}" method="POST">
+            <label for="referral_code">Referral Code</label>
+            <input type="text" name="referral_code" id="referral_code" placeholder="Enter referral code">
+            <button type="submit">Proceed to Payment</button>
         </form>
     </div>
-
-    <script>
-        function updateSuccessURL() {
-            const referralCode = document.getElementById('referral_code').value.trim();
-            const surlInput = document.getElementById('surl');
-            let surl = new URL(surlInput.value);
-
-            // Remove existing referral_code param and add new one if available
-            surl.searchParams.delete('referral_code');
-            if (referralCode) {
-                surl.searchParams.append('referral_code', referralCode);
-            }
-            surlInput.value = surl.toString();
-        }
-    </script>
 </body>
 </html>
