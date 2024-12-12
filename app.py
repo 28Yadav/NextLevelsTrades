@@ -311,10 +311,10 @@ If you did not make this request then simply ignore this email and no changes wi
 
 def get_plans():
     return {
-        "1_month": {"amount": "900", "duration": timedelta(days=30)},
-        "3_months": {"amount": "2499", "duration": timedelta(days=90)},
-        "6_months": {"amount": "4999", "duration": timedelta(days=180)},
-        "1_year": {"amount": "8499", "duration": timedelta(days=365)},
+        "1_month": {"amount": "1", "duration": timedelta(days=30)},
+        "3_months": {"amount": "24.99", "duration": timedelta(days=90)},
+        "6_months": {"amount": "44.99", "duration": timedelta(days=180)},
+        "1_year": {"amount": "84.99", "duration": timedelta(days=365)},
     }
 
 def generate_payu_hash(data):
