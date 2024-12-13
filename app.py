@@ -311,7 +311,7 @@ If you did not make this request then simply ignore this email and no changes wi
 
 def get_plans():
     return {
-        "1_month": {"amount": "15.49", "duration": timedelta(days=30)},
+        "1_month": {"amount": "16.49", "duration": timedelta(days=30)},
         "3_months": {"amount": "24.99", "duration": timedelta(days=90)},
         "6_months": {"amount": "44.99", "duration": timedelta(days=180)},
         "1_year": {"amount": "84.99", "duration": timedelta(days=365)},
