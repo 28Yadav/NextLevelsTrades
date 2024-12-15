@@ -261,6 +261,40 @@
         </div>
     </nav>
     
+    <script>
+         document.addEventListener('click', function (event) {
+            // Get the checkbox and the menu
+            const menuToggle = document.getElementById('menu-toggle');
+            const menu = document.querySelector('.navbar-menu');
+            const menuIcon = document.querySelector('.menu-icon');
+    
+            // Check if the clicked area is not the menu or the icon
+            if (!menu.contains(event.target) && !menuToggle.contains(event.target) && !menuIcon.contains(event.target)) {
+                // Uncheck the checkbox to close the menu
+                menuToggle.checked = false;
+            }
+        });
+        // Function to update success URL dynamically before form submission
+        function updateSuccessURL(form) {
+            const referralInput = form.querySelector('input[name="referral_code"]');
+            const successURLInput = document.createElement('input');
+            successURLInput.type = 'hidden';
+            successURLInput.name = 'success_url';
+            
+            const referralCode = referralInput.value.trim();
+            const plan = form.dataset.plan;  // Plan attribute from form
+    
+            // Construct the success URL dynamically
+            let successURL = `${window.location.origin}/nowpayments_success/${plan}`;
+            if (referralCode) {
+                successURL += `?referral_code=${encodeURIComponent(referralCode)}`;
+            }
+    
+            successURLInput.value = successURL;
+            form.appendChild(successURLInput);
+        }
+    </script>
+    
     <div class="pricing-container">
         <h1>Select Your Plan</h1>
         <div class="pricing-options">
@@ -274,13 +308,13 @@
                     <li>7 Exchanges</li>
                     <li>Unlimited Support</li>
                 </ul>
-                <form action="{{ url_for('nowpayments_payment', plan='1_month') }}" method="post">
-                    <label for="referral_code_1_month">Referral Code (Optional):</label>
-                    <input type="text" name="referral_code" id="referral_code_1_month" placeholder="Enter referral code" style="height: 20px; width: 150px; border: 1px solid black; border-radius: 5px;">
+                <form action="{{ url_for('nowpayments_payment', plan='1_month') }}" method="post" data-plan="1_month" onsubmit="updateSuccessURL(this)">
+                    <label for="referral_code_1">Referral Code (Optional):</label>
+                    <input type="text" name="referral_code" id="referral_code_1" placeholder="Enter referral code">
                     <button type="submit">Select Plan</button>
                 </form>
             </div>
-
+    
             <!-- 3 Months Plan -->
             <div class="pricing-option">
                 <h2>3 Months</h2>
@@ -291,13 +325,13 @@
                     <li>7 Exchanges</li>
                     <li>Unlimited Support</li>
                 </ul>
-                <form action="{{ url_for('nowpayments_payment', plan='3_months') }}" method="post">
-                    <label for="referral_code_3_months">Referral Code (Optional):</label>
-                    <input type="text" name="referral_code" id="referral_code_3_months" placeholder="Enter referral code" style="height: 20px; width: 150px; border: 1px solid black; border-radius: 5px;">
+                <form action="{{ url_for('nowpayments_payment', plan='3_months') }}" method="post" data-plan="3_months" onsubmit="updateSuccessURL(this)">
+                    <label for="referral_code_3">Referral Code (Optional):</label>
+                    <input type="text" name="referral_code" id="referral_code_3" placeholder="Enter referral code">
                     <button type="submit">Select Plan</button>
                 </form>
             </div>
-
+    
             <!-- 6 Months Plan -->
             <div class="pricing-option">
                 <h2>6 Months</h2>
@@ -308,13 +342,13 @@
                     <li>7 Exchanges</li>
                     <li>Unlimited Support</li>
                 </ul>
-                <form action="{{ url_for('nowpayments_payment', plan='6_months') }}" method="post">
-                    <label for="referral_code_6_months">Referral Code (Optional):</label>
-                    <input type="text" name="referral_code" id="referral_code_6_months" placeholder="Enter referral code" style="height: 20px; width: 150px; border: 1px solid black; border-radius: 5px;">
+                <form action="{{ url_for('nowpayments_payment', plan='6_months') }}" method="post" data-plan="6_months" onsubmit="updateSuccessURL(this)">
+                    <label for="referral_code_6">Referral Code (Optional):</label>
+                    <input type="text" name="referral_code" id="referral_code_6" placeholder="Enter referral code">
                     <button type="submit">Select Plan</button>
                 </form>
             </div>
-
+    
             <!-- 1 Year Plan -->
             <div class="pricing-option">
                 <h2>1 Year</h2>
@@ -325,28 +359,14 @@
                     <li>7 Exchanges</li>
                     <li>Premium Support</li>
                 </ul>
-                <form action="{{ url_for('nowpayments_payment', plan='1_year') }}" method="post">
-                    <label for="referral_code_1_year">Referral Code (Optional):</label>
-                    <input type="text" name="referral_code" id="referral_code_1_year" placeholder="Enter referral code" style="height: 20px; width: 150px; border: 1px solid black; border-radius: 5px;">
+                <form action="{{ url_for('nowpayments_payment', plan='1_year') }}" method="post" data-plan="1_year" onsubmit="updateSuccessURL(this)">
+                    <label for="referral_code_12">Referral Code (Optional):</label>
+                    <input type="text" name="referral_code" id="referral_code_12" placeholder="Enter referral code">
                     <button type="submit">Select Plan</button>
                 </form>
             </div>
         </div>
     </div>
-
-    <script>
-        document.addEventListener('click', function (event) {
-            // Get the checkbox and the menu
-            const menuToggle = document.getElementById('menu-toggle');
-            const menu = document.querySelector('.navbar-menu');
-            const menuIcon = document.querySelector('.menu-icon');
     
-            // Check if the clicked area is not the menu or the icon
-            if (!menu.contains(event.target) && !menuToggle.contains(event.target) && !menuIcon.contains(event.target)) {
-                // Uncheck the checkbox to close the menu
-                menuToggle.checked = false;
-            }
-        });
-    </script>
 </body>
 </html>
