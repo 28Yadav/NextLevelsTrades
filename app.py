@@ -9,6 +9,8 @@ from flask_mail import Mail, Message
 from datetime import datetime, timedelta
 from itsdangerous import URLSafeTimedSerializer
 import pyotp
+from sqlalchemy import update
+
 import logging
 from authlib.integrations.flask_client import OAuth
 from authlib.common.security import generate_token
@@ -311,7 +313,7 @@ If you did not make this request then simply ignore this email and no changes wi
 
 def get_plans():
     return {
-        "1_month": {"amount": "17.49", "duration": timedelta(days=30)},
+        "1_month": {"amount": "20", "duration": timedelta(days=30)},
         "3_months": {"amount": "24.99", "duration": timedelta(days=90)},
         "6_months": {"amount": "44.99", "duration": timedelta(days=180)},
         "1_year": {"amount": "84.99", "duration": timedelta(days=365)},
@@ -407,46 +409,43 @@ def pricing():
 @app.route('/nowpayments_payment/<plan>', methods=['POST'])
 @login_required
 def nowpayments_payment(plan):
+    referral_code = request.form.get('referral_code', '').strip()
+    logging.info(f"Referral Code Received in POST: {referral_code}")
+    
     plans = get_plans()
-
     if plan not in plans:
-        flash('Invalid plan selected.', 'danger')
+        flash("Invalid plan selected.", "danger")
         return redirect(url_for('pricing'))
 
-    # Create an invoice through NowPayments API
-    amount = plans[plan]["amount"]
+    # Create invoice data
     nowpayments_data = {
-        "price_amount": amount,
+        "price_amount": plans[plan]["amount"],
         "price_currency": "USD",
         "order_id": f"txn_{datetime.utcnow().timestamp()}_{current_user.id}",
-        "success_url": url_for('nowpayments_success', plan=plan, _external=True),
-        "ipn_callback_url": "https://your-ipn-url.com/callback",  # Optional, for notifications
+        "success_url": url_for('nowpayments_success', plan=plan, referral_code=referral_code, _external=True),
         "cancel_url": url_for('nowpayments_failure', _external=True),
     }
 
-    headers = {
-        "x-api-key": NOWPAYMENTS_API_KEY,
-        "Content-Type": "application/json"
-    }
-
+    headers = {"x-api-key": NOWPAYMENTS_API_KEY, "Content-Type": "application/json"}
     try:
         response = requests.post(NOWPAYMENTS_API_URL, json=nowpayments_data, headers=headers)
         response_data = response.json()
 
         if response.status_code == 200 and response_data.get("invoice_url"):
-            invoice_url = response_data["invoice_url"]
-            return redirect(invoice_url)  # Redirect user to NowPayments invoice page
+            return redirect(response_data["invoice_url"])
         else:
             flash("Error creating payment invoice. Please try again.", "danger")
             logging.error(f"NowPayments error: {response_data}")
-            return redirect(url_for('pricing'))
     except Exception as e:
-        logging.error(f"Exception while creating NowPayments invoice: {str(e)}")
+        logging.error(f"NowPayments Exception: {str(e)}")
         flash("Payment service is currently unavailable.", "danger")
-        return redirect(url_for('pricing'))
+
+    return redirect(url_for('pricing'))
 
 
-# Success route after payment
+
+
+
 @app.route('/nowpayments_success/<plan>')
 @login_required
 def nowpayments_success(plan):
@@ -455,36 +454,57 @@ def nowpayments_success(plan):
 
     referrer = None
     if referral_code:
-        # Prevent self-referral
         if referral_code == current_user.referral_code:
             logging.warning("Self-referral detected. Points not awarded.")
         else:
             referrer = User.query.filter_by(referral_code=referral_code).first()
-            if referrer:
-                logging.info(f"Referrer found: {referrer.username}")
+            if not referrer:
+                logging.warning(f"No user found with referral code: {referral_code}")
             else:
-                logging.warning(f"No referrer found for code: {referral_code}")
+                logging.info(f"Referrer found: {referrer.username}, current points: {referrer.points}")
 
-    # Update current user's subscription
     plans = get_plans()
-    current_user.subscription_plan = plan.replace('_', ' ')
-    current_user.subscription_start = datetime.utcnow()
-    current_user.subscription_end = datetime.utcnow() + plans[plan]["duration"]
-    current_user.subscription_active = True
+    if plan not in plans:
+        flash("Invalid plan selected.", "danger")
+        return redirect(url_for('pricing'))
 
-    # Award points to the referrer
-    if referrer:
-        referrer.points += 10
-        logging.info(f"Referrer points updated to: {referrer.points}")
-        db.session.add(referrer)
+    try:
+        # Update current user's subscription
+        current_user.subscription_plan = plan.replace('_', ' ')
+        current_user.subscription_start = datetime.utcnow()
+        current_user.subscription_end = datetime.utcnow() + plans[plan]["duration"]
+        current_user.subscription_active = True
 
-    db.session.add(current_user)
-    db.session.commit()
+        # Increment referrer's points using explicit update
+        if referrer:
+            logging.info(f"Incrementing points for referrer {referrer.username}")
+            db.session.execute(
+                update(User)
+                .where(User.id == referrer.id)
+                .values(points=(referrer.points or 0) + 10)
+            )
+            logging.info("Referrer points incremented successfully.")
 
-    flash(f'You have successfully subscribed to the {plan.replace("_", " ").title()} plan!', 'success')
-    if referrer:
-        flash(f'Referrer {referrer.username} has been credited with 10 points.', 'info')
+        # Commit changes
+        db.session.commit()
+        logging.info("Database commit successful.")
+
+        # Reload and log referrer points to verify update
+        if referrer:
+            db.session.refresh(referrer)
+            logging.info(f"Referrer {referrer.username} updated points: {referrer.points}")
+
+        flash(f'You have successfully subscribed to the {plan.replace("_", " ").title()} plan!', 'success')
+        if referrer:
+            flash(f'Referrer {referrer.username} has been credited with 10 points.', 'info')
+
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error while updating points: {e}")
+        flash("An error occurred while updating your subscription. Please try again.", "danger")
+
     return redirect(url_for('home'))
+
 
 
 # Failure route after payment failure
