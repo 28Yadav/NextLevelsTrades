@@ -58,7 +58,7 @@ PAYU_SALT = "YdxXtt8DiMRExSSRTE5itKa1Auu3FpfR"
 PAYU_URL = "https://test.payu.in/_payment"  # Use https://secure.payu.in/_payment 
 
 NOWPAYMENTS_API_KEY = "DNCDQT6-S4EMXKA-QSBJ48Y-08YZZ7X"  # Your merchant API key
-NOWPAYMENTS_API_URL = "https://sandbox.nowpayments.io/"
+NOWPAYMENTS_API_URL = "https://api-sandbox.nowpayments.io/v1/invoice"
 
 
 logging.basicConfig(level=logging.DEBUG)
